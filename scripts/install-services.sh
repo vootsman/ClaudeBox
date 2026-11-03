@@ -16,7 +16,9 @@ CHANNEL_ARGS="${CHANNEL_ARGS# }"
 UNIT_DIR="$HOME/.config/systemd/user"
 mkdir -p "$UNIT_DIR"
 
-for f in agent.service agent-backup.service agent-backup.timer; do
+UNITS="agent.service agent-backup.service agent-backup.timer"
+[ -n "${ONEDRIVE_FOLDER:-}" ] && UNITS="$UNITS agent-onedrive.service agent-onedrive.timer"
+for f in $UNITS; do
   sed -e "s|@SESSION@|$SESSION|g" \
       -e "s|@AGENT_NAME@|$AGENT_NAME|g" \
       -e "s|@REPO@|$REPO|g" \
@@ -27,6 +29,9 @@ done
 systemctl --user daemon-reload
 systemctl --user enable agent.service
 systemctl --user enable --now agent-backup.timer
+if [ -n "${ONEDRIVE_FOLDER:-}" ]; then
+  systemctl --user enable --now agent-onedrive.timer
+fi
 
 if [ "${1:-}" != "--no-start" ]; then
   systemctl --user restart agent.service

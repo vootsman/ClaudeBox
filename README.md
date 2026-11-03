@@ -1,5 +1,7 @@
 # AgentWake: Linux / VM edition
 
+> ⚠️ **Not for patient data.** This is a personal assistant, not a HIPAA-compliant system. Don't give it access to an EMR, work email, or anything with protected health information, and run it on a **personal** computer, not a work computer or work network.
+
 A Linux port of [AgentWake](https://github.com/BenjaminBanwart/agentwake) (MIT) by Benjamin Banwart. It builds a persistent Claude Code agent with a name, a markdown "brain", and chat access through Discord, Telegram, or both, running on **Ubuntu Server 26.04 LTS** instead of a Mac.
 
 Compared with the original:
@@ -13,6 +15,21 @@ Compared with the original:
 | One machine | **Portable**: rebuild on TrueNAS, a cloud server, or a new PC from the backup repo |
 | Discord only | Discord, Telegram, or both at once (same agent, same memory) |
 
+## Before you start
+
+| You'll need | Notes |
+|---|---|
+| A Windows 11 **Pro** PC that stays on | Hyper-V isn't in Windows Home. Any other hypervisor works too. |
+| A **Claude Pro or Max** subscription | Your own. The agent uses its usage limits. |
+| **Discord** and/or **Telegram** | You'll create your own bot (free). |
+| A **GitHub** account | Free. Holds a *private* backup of your agent's memory. |
+| A password manager | For the bot tokens. |
+| About an hour | Most of it is waiting for installs. |
+
+Everything is yours alone: your own subscription, bots, backup repo, and VM. Nothing is shared with whoever gave you this link.
+
+Use the tested version: `v1.0` (see step 2). Stuck? See [docs/troubleshooting.md](docs/troubleshooting.md).
+
 ## What's in here
 
 ```
@@ -21,6 +38,8 @@ bootstrap.sh              Installs tmux, git, gh, Bun, Claude Code; enables alwa
 scripts/init-agent.sh     Creates the brain, CLAUDE.md and agent.conf from templates
 scripts/install-services.sh  Installs the systemd service + hourly backup timer
 scripts/backup.sh         Commit and push ~/agent (run by the timer)
+scripts/setup-onedrive.sh Optional: two-way sync of one OneDrive folder
+docs/                     Hyper-V VM guide, integrations, troubleshooting
 systemd/                  Service and timer templates
 templates/                Brain files and CLAUDE.md template
 ```
@@ -43,7 +62,7 @@ SSH in from Windows Terminal (`ssh YOURUSER@agent-vm.mshome.net` with Hyper-V's 
 
 ```bash
 sudo apt update && sudo apt install -y git
-git clone https://github.com/vootsman/agentwake.git ~/agent
+git clone --branch v1.0 https://github.com/vootsman/agentwake.git ~/agent
 bash ~/agent/bootstrap.sh
 source ~/.bashrc
 ```
@@ -62,6 +81,10 @@ Sign in with your Claude Pro/Max account when asked. On a headless VM it shows a
 > Read agentwake-linux.md and walk me through it.
 
 About 15 minutes later you have a named agent on Discord and/or Telegram, with its brain backed up to a private GitHub repo.
+
+## 4. Optional: calendar and files
+
+See [docs/integrations.md](docs/integrations.md) to give your agent **Google Calendar** (and other Claude connectors) and a synced **OneDrive** folder. Read its safety notes first: connectors you've added on claude.ai are available to the agent automatically.
 
 ## Day-to-day
 

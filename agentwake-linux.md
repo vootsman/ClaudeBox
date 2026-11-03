@@ -215,6 +215,8 @@ Each family member who should be able to use {AgentName} pairs the same way, wit
 
 Wait for confirmation, then run `~/agent/scripts/backup.sh` once.
 
+Then tell the user: "Any connectors you've added on claude.ai (like Google Calendar or Gmail) are already available to me. Type `/mcp` here to see them, and turn off any you don't want me to use. See docs/integrations.md."
+
 ---
 
 ## Phase 8: Final Summary
@@ -239,6 +241,11 @@ Display:
   Stop:                        systemctl --user stop agent
   Logs:                        journalctl --user -u agent
   Back up now:                 ~/agent/scripts/backup.sh
+
+  OPTIONAL: CALENDAR, EMAIL, ONEDRIVE
+  -------------------------------------------------------
+  See docs/integrations.md. Check /mcp first: your
+  claude.ai connectors are already available to me.
 
   ADD OR REMOVE A CHAT APP LATER
   -------------------------------------------------------
@@ -272,4 +279,5 @@ Use this when `~/agent/agent.conf` already exists (the user cloned their private
 5. Link the config: `mkdir -p ~/.claude && ln -sfn ~/agent/CLAUDE.md ~/.claude/CLAUDE.md`
 6. Check that `git remote -v` shows their private repo and `git pull` works.
 7. Run Phase 6 and Phase 7. Pairing must be redone on the new machine.
+7b. If `agent.conf` has an `ONEDRIVE_FOLDER` line, run `~/agent/scripts/setup-onedrive.sh` so the user can sign in to OneDrive again.
 8. Add a Conversation Log entry noting the move (date and new host), run `scripts/backup.sh`, and show the Phase 8 summary.

@@ -37,7 +37,7 @@ Which option depends on how your PC connects to your home network.
 The VM gets a private address behind your PC, with full internet access (all the agent needs: Discord and Telegram connect outward). Its address changes on reboot, but you can always reach it by name from your PC:
 
 ```powershell
-ssh matt@agent-vm.mshome.net
+ssh yourname@agent-vm.mshome.net
 ```
 
 Only this PC can SSH into the VM, which is a security plus.
@@ -107,11 +107,11 @@ In the VM window, accept the defaults except where noted:
 | Screen | Choose |
 |---|---|
 | Language / keyboard | English (US) or yours |
-| Type of install | **Ubuntu Server** (not minimized) |
+| Type of install | **Ubuntu Server** (not *minimized*). If you end up with a minimized install anyway, that's fine: the README installs git first. |
 | Network | Leave it automatic (DHCP) |
 | Proxy / mirror | Leave blank / default |
 | Storage | **Use an entire disk** (defaults are fine) → Done → Continue |
-| Profile | Your name, server name `agent-vm`, a username (e.g. `matt`) and a strong password |
+| Profile | Your name, server name `agent-vm`, a username (e.g. `yourname`) and a strong password |
 | Ubuntu Pro | Skip for now |
 | SSH | ✅ **Install OpenSSH server** |
 | Featured snaps | Select none |
@@ -120,11 +120,11 @@ When it says **Installation complete**, choose **Reboot now**. If it asks you to
 
 ## 7. First login and updates
 
-Log in at the VM console, or (easier, since copy/paste works) from **Windows Terminal / PowerShell** on your PC:
+The Hyper-V console window has no copy/paste, so use it only to log in the first time. After that, connect from **Windows Terminal / PowerShell** on your PC:
 
 ```powershell
-ssh matt@agent-vm.mshome.net   # Default Switch: use your username
-ssh matt@192.168.1.57          # External switch: use the VM's IP (run `hostname -I` in the VM console)
+ssh yourname@agent-vm.mshome.net   # Default Switch: use your username
+ssh yourname@192.168.1.57          # External switch: use the VM's IP (run `hostname -I` in the VM console)
 ```
 
 Then on the VM:

@@ -1,0 +1,8 @@
+[Unit]
+Description=Sync @AGENT_NAME@'s OneDrive folder
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/bin/bash @REPO@/scripts/onedrive-sync.sh
