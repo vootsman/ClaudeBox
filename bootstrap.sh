@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# AgentWake-Linux bootstrap: installs everything the agent needs on a fresh
+# ClaudeBox bootstrap: installs everything the agent needs on a fresh
 # Ubuntu Server 26.04 LTS machine. Safe to run more than once.
 set -euo pipefail
 

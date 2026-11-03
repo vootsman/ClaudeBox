@@ -1,10 +1,14 @@
-# AgentWake: Linux / VM edition
+# ClaudeBox
+
+**An always-on personal Claude agent in a Linux VM**, reachable from Discord and/or Telegram, with a memory that grows and backs itself up.
 
 > ⚠️ **Not for patient data.** This is a personal assistant, not a HIPAA-compliant system. Don't give it access to an EMR, work email, or anything with protected health information, and run it on a **personal** computer, not a work computer or work network.
 
-A Linux port of [AgentWake](https://github.com/BenjaminBanwart/agentwake) (MIT) by Benjamin Banwart. It builds a persistent Claude Code agent with a name, a markdown "brain", and chat access through Discord, Telegram, or both, running on **Ubuntu Server 26.04 LTS** instead of a Mac.
+Based on [AgentWake](https://github.com/BenjaminBanwart/agentwake) by Benjamin Banwart (MIT). It builds a persistent Claude Code agent with a name, a markdown "brain", and chat access through Discord, Telegram, or both, running on **Ubuntu Server 26.04 LTS**.
 
-Compared with the original:
+*ClaudeBox is a personal project. It is not made by, affiliated with, or endorsed by Anthropic. "Claude" is a trademark of Anthropic.*
+
+Compared with the original AgentWake:
 
 | Original (Mac) | This edition |
 |---|---|
@@ -33,7 +37,7 @@ Use the tested version: `v1.0` (see step 2). Stuck? See [docs/troubleshooting.md
 ## What's in here
 
 ```
-agentwake-linux.md        The setup guide Claude Code follows (setup + restore)
+setup.md                  The setup guide Claude Code follows (setup + restore)
 bootstrap.sh              Installs tmux, git, gh, Bun, Claude Code; enables always-on services
 scripts/init-agent.sh     Creates the brain, CLAUDE.md and agent.conf from templates
 scripts/install-services.sh  Installs the systemd service + hourly backup timer
@@ -62,7 +66,7 @@ SSH in from Windows Terminal (`ssh YOURUSER@agent-vm.mshome.net` with Hyper-V's 
 
 ```bash
 sudo apt update && sudo apt install -y git
-git clone --branch v1.0 https://github.com/vootsman/agentwake.git ~/agent
+git clone --branch v1.0 https://github.com/vootsman/ClaudeBox.git ~/agent
 bash ~/agent/bootstrap.sh
 source ~/.bashrc
 ```
@@ -78,7 +82,7 @@ claude
 
 Sign in with your Claude Pro/Max account when asked. On a headless VM it shows a link; open it on your phone or PC and paste the code back. Then say:
 
-> Read agentwake-linux.md and walk me through it.
+> Read setup.md and walk me through it.
 
 About 15 minutes later you have a named agent on Discord and/or Telegram, with its brain backed up to a private GitHub repo.
 
@@ -114,7 +118,7 @@ The VM disk doesn't have to move. Your agent is the private repo plus the bot to
    bash ~/agent/bootstrap.sh && source ~/.bashrc
    cd ~/agent && claude
    ```
-   Say *"Read agentwake-linux.md"*. It detects the existing `agent.conf`, runs **Restore Mode**, asks for the bot token(s), and walks you through re-pairing.
+   Say *"Read setup.md"*. It detects the existing `agent.conf`, runs **Restore Mode**, asks for the bot token(s), and walks you through re-pairing.
 
 Run only one copy at a time: two machines on the same bot token will both reply.
 
@@ -128,4 +132,4 @@ Run only one copy at a time: two machines on the same bot token will both reply.
 
 ## License
 
-MIT. Original AgentWake © 2026 Benjamin Banwart; Linux adaptation built on it under the same license.
+MIT. Based on AgentWake © 2026 Benjamin Banwart; ClaudeBox changes © 2026 vootsman, under the same license. See [LICENSE](LICENSE).

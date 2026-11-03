@@ -1,5 +1,5 @@
 [Unit]
-Description=@AGENT_NAME@ (AgentWake agent in tmux)
+Description=@AGENT_NAME@ (ClaudeBox agent in tmux)
 After=network-online.target
 Wants=network-online.target
 
