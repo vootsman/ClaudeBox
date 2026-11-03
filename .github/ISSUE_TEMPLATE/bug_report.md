@@ -9,10 +9,10 @@ labels: bug
 A clear description of the problem.
 
 **Where**
-Which phase / step in `agentwake.md`?
+Which phase / step in `setup.md` (or which doc in `docs/`)?
 
 **Environment**
-- macOS version:
+- Ubuntu version, and where it runs (Hyper-V, VMware, Proxmox, cloud…):
 - Claude Code version:
 - Claude plan (Pro / Max):
 
