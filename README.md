@@ -32,7 +32,7 @@ Compared with the original AgentWake:
 
 Everything is yours alone: your own subscription, bots, backup repo, and VM. Nothing is shared with whoever gave you this link.
 
-Use the tested version: `v1.0` (see step 2). Stuck? See [docs/troubleshooting.md](docs/troubleshooting.md).
+Use the tested version: `v1.1` (see step 2). Stuck? See [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## What's in here
 
@@ -66,7 +66,7 @@ SSH in from Windows Terminal (`ssh YOURUSER@agent-vm.mshome.net` with Hyper-V's 
 
 ```bash
 sudo apt update && sudo apt install -y git
-git clone --branch v1.0 https://github.com/vootsman/ClaudeBox.git ~/agent
+git clone --branch v1.1 https://github.com/vootsman/ClaudeBox.git ~/agent
 bash ~/agent/bootstrap.sh
 source ~/.bashrc
 ```
