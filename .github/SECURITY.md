@@ -8,8 +8,6 @@ If you find a security issue in the guide (for example, a step that could leak c
 
 - Use GitHub's **"Report a vulnerability"** button under this repository's **Security** tab.
 
-ClaudeBox is based on AgentWake. For problems in the original Mac guide, see [BenjaminBanwart/agentwake](https://github.com/BenjaminBanwart/agentwake).
-
 Please **do not** open a public issue for security problems. You'll get a response as soon as possible.
 
 ## Using ClaudeBox safely
