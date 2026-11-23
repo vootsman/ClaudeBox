@@ -17,6 +17,6 @@ Thanks for your interest! ClaudeBox is a guided setup file (`setup.md`), a few s
 
 ## Scope
 
-ClaudeBox targets **Ubuntu Server + Claude Code**, usually in a VM. It's based on [AgentWake](https://github.com/BenjaminBanwart/agentwake), which targets macOS; the original Mac guide is kept here as `agentwake.md`.
+ClaudeBox targets **Ubuntu Server + Claude Code**, usually in a VM.
 
 By contributing, you agree that your contributions are licensed under the repository's [MIT License](../LICENSE).
