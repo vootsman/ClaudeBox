@@ -1,7 +1,6 @@
 # ClaudeBox: Discord + Telegram AI Agent Setup
 
-<!-- ClaudeBox is based on AgentWake by Benjamin Banwart (MIT): https://github.com/BenjaminBanwart/agentwake
-     It targets Ubuntu Server 26.04 LTS (in a VM, on TrueNAS, or a cloud server) and keeps
+<!-- ClaudeBox setup guide. It targets Ubuntu Server 26.04 LTS (in a VM, on TrueNAS, or a cloud server) and keeps
      everything in one git repo so the agent can be rebuilt on any machine. -->
 
 You are Claude Code. The user has put the ClaudeBox files in `~/agent` and asked you to read this file and run the setup. Work through it section by section, interactively. Wait for user input where indicated. Be warm, confident, and clear. Do not dump everything at once.

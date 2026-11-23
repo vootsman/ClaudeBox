@@ -15,14 +15,15 @@ REPO="$(cd "$(dirname "$0")" && pwd)"
 # Files uploaded through GitHub's website lose their executable bit; restore it,
 # and tell git to ignore permission-only changes so setup doesn't flag them.
 chmod +x "$REPO"/bootstrap.sh "$REPO"/scripts/*.sh
-if command -v git >/dev/null 2>&1 && [ -d "$REPO/.git" ]; then
-  git -C "$REPO" config core.fileMode false
-fi
 
 say "Installing system packages (tmux, git, curl, unzip, GitHub CLI, python3, SSH server)"
 sudo apt-get update -y
-sudo apt-get install -y tmux git curl unzip ca-certificates gh python3 openssh-server iputils-arping
-[ -d "$REPO/.git" ] && git -C "$REPO" config core.fileMode false
+sudo apt-get install -y tmux git curl unzip ca-certificates gh python3 openssh-server
+# Optional helper for the IP-conflict check below; setup continues without it.
+sudo apt-get install -y iputils-arping || echo "(arping not available; skipping the IP-conflict check)"
+if [ -d "$REPO/.git" ]; then
+  git -C "$REPO" config core.fileMode false
+fi
 
 say "Making sure SSH starts at every boot"
 sudo systemctl enable --now ssh
@@ -30,7 +31,7 @@ sudo systemctl enable --now ssh
 say "Checking for an IP address conflict"
 IFACE="$(ip route show default 2>/dev/null | awk '{print $5; exit}')"
 MYIP="$(ip -4 -o addr show dev "$IFACE" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -1)"
-if [ -n "$IFACE" ] && [ -n "$MYIP" ]; then
+if [ -n "$IFACE" ] && [ -n "$MYIP" ] && command -v arping >/dev/null 2>&1; then
   if sudo arping -D -q -c 3 -I "$IFACE" "$MYIP"; then
     echo "OK: this VM ($MYIP) is the only device using its address."
   else

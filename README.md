@@ -4,20 +4,17 @@
 
 > ⚠️ **Not for patient data.** This is a personal assistant, not a HIPAA-compliant system. Don't give it access to an EMR, work email, or anything with protected health information, and run it on a **personal** computer, not a work computer or work network.
 
-Based on [AgentWake](https://github.com/BenjaminBanwart/agentwake) by Benjamin Banwart (MIT). It builds a persistent Claude Code agent with a name, a markdown "brain", and chat access through Discord, Telegram, or both, running on **Ubuntu Server 26.04 LTS**.
+It builds a persistent Claude Code agent with a name, a markdown "brain", and chat access through Discord, Telegram, or both, running on **Ubuntu Server 26.04 LTS**.
 
 *ClaudeBox is a personal project. It is not made by, affiliated with, or endorsed by Anthropic. "Claude" is a trademark of Anthropic.*
 
-Compared with the original AgentWake:
+## What you get
 
-| Original (Mac) | This edition |
-|---|---|
-| Homebrew installs | `bootstrap.sh` (apt + official installers) |
-| `caffeinate` + manual tmux launch | systemd service: starts on boot, restarts if it crashes |
-| Brain in `~/Documents` | Brain in `~/agent/brain`, backed up hourly to a private GitHub repo |
-| Turn off auto-updates | Not needed: security updates are fine because the service restarts the agent after a reboot |
-| One machine | **Portable**: rebuild on TrueNAS, a cloud server, or a new PC from the backup repo |
-| Discord only | Discord, Telegram, or both at once (same agent, same memory) |
+- **Always on.** A systemd service starts the agent at boot and restarts it if it crashes. Security updates and reboots are fine.
+- **A memory that grows.** A markdown "brain" in `~/agent/brain` that the agent keeps up to date, backed up hourly to your own private GitHub repo.
+- **Chat from anywhere.** Discord, Telegram, or both at once, with the same agent and the same memory.
+- **Portable.** Rebuild it on another VM, TrueNAS, a cloud server, or a new PC from the backup repo in about 15 minutes.
+- **Optional extras.** Google Calendar and other Claude connectors, and a synced OneDrive folder.
 
 ## Before you start
 
@@ -32,7 +29,7 @@ Compared with the original AgentWake:
 
 Everything is yours alone: your own subscription, bots, backup repo, and VM. Nothing is shared with whoever gave you this link.
 
-Use the tested version: `v1.1` (see step 2). Stuck? See [docs/troubleshooting.md](docs/troubleshooting.md).
+Use the tested version: `v1.2` (see step 2). Stuck? See [docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## What's in here
 
@@ -43,6 +40,7 @@ scripts/init-agent.sh     Creates the brain, CLAUDE.md and agent.conf from templ
 scripts/install-services.sh  Installs the systemd service + hourly backup timer
 scripts/backup.sh         Commit and push ~/agent (run by the timer)
 scripts/setup-onedrive.sh Optional: two-way sync of one OneDrive folder
+scripts/onedrive-sync.sh  Runs that sync (every 15 minutes, by a timer)
 docs/                     Hyper-V VM guide, integrations, troubleshooting
 systemd/                  Service and timer templates
 templates/                Brain files and CLAUDE.md template
@@ -51,8 +49,6 @@ templates/                Brain files and CLAUDE.md template
 Once set up, `~/agent` also contains `agent.conf`, `CLAUDE.md`, and `brain/`, and that whole folder *is* your agent.
 
 ---
-
-> **Looking for the original Mac version?** It's unchanged in [`agentwake.md`](agentwake.md), and its README is [`README-mac.md`](README-mac.md).
 
 ## 1. Create the VM
 
@@ -66,7 +62,7 @@ SSH in from Windows Terminal (`ssh YOURUSER@agent-vm.mshome.net` with Hyper-V's 
 
 ```bash
 sudo apt update && sudo apt install -y git
-git clone --branch v1.1 https://github.com/vootsman/ClaudeBox.git ~/agent
+git clone --branch v1.2 https://github.com/vootsman/ClaudeBox.git ~/agent
 bash ~/agent/bootstrap.sh
 source ~/.bashrc
 ```
@@ -122,6 +118,20 @@ The VM disk doesn't have to move. Your agent is the private repo plus the bot to
 
 Run only one copy at a time: two machines on the same bot token will both reply.
 
+## Updating to a newer ClaudeBox
+
+Your agent's folder is backed up to your own private repo, not this one, so `git pull` won't bring in ClaudeBox updates. To pull them in (your brain, settings and `CLAUDE.md` are not touched):
+
+```bash
+cd ~/agent
+git remote add claudebox https://github.com/vootsman/ClaudeBox.git   # first time only
+git fetch claudebox --tags
+git merge v1.2 -m "Update ClaudeBox"   # or the newest version tag
+bash ~/agent/bootstrap.sh && ~/agent/scripts/install-services.sh
+```
+
+If the merge reports a conflict, stop and ask for help before going further. New rules added to `templates/CLAUDE.md` don't reach an existing agent automatically; the release notes say when to tell your agent to add them.
+
 ## Safety notes
 
 - The agent runs with `--dangerously-skip-permissions`, so it can do anything your VM user can. The VM boundary is what protects the rest of your network and files. Don't mount your NAS shares or home folders into it unless you mean to.
@@ -132,4 +142,4 @@ Run only one copy at a time: two machines on the same bot token will both reply.
 
 ## License
 
-MIT. Based on AgentWake © 2026 Benjamin Banwart; ClaudeBox changes © 2026 vootsman, under the same license. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
